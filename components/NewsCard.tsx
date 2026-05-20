@@ -31,7 +31,6 @@ export default function NewsCard({
           src={news.image}
           h={220}
           alt={news.title}
-          fallbackSrc="https://placehold.co/600x400?text=News+Image"
           style={{
             objectFit: "cover",
           }}
@@ -50,6 +49,9 @@ export default function NewsCard({
             fw={700}
             size="lg"
             lineClamp={2}
+            style={{
+              wordBreak: "break-word",
+            }}
           >
             {news.title}
           </Text>
@@ -59,6 +61,9 @@ export default function NewsCard({
             size="sm"
             c="dimmed"
             lineClamp={3}
+            style={{
+              wordBreak: "break-word",
+            }}
           >
             {news.description}
           </Text>
@@ -77,6 +82,7 @@ export default function NewsCard({
           href={`/news/${news._id}`}
           style={{
             textDecoration: "none",
+            width: "100%",
           }}
         >
           <Button
@@ -84,6 +90,7 @@ export default function NewsCard({
             color="red"
             radius="md"
             mt={15}
+            size="sm"
           >
             Read More
           </Button>
