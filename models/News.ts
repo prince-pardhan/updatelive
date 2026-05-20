@@ -7,7 +7,7 @@ const newsSchema =
 
       description: String,
 
-      image: String,
+      avtar: String,
 
       category: String,
 

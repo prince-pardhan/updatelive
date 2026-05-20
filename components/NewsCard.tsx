@@ -28,7 +28,7 @@ export default function NewsCard({
     >
       <Card.Section>
         <Image
-          src={news.image}
+          src={news.avtar}
           h={220}
           alt={news.title}
           style={{
