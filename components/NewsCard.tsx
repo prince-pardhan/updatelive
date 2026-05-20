@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-} from "react";
-
 import Link from "next/link";
 
 import {
-  Container,
-  SimpleGrid,
-  Title,
   Card,
   Image,
   Text,
@@ -19,120 +11,91 @@ import {
   Box,
 } from "@mantine/core";
 
-export default function HomePage() {
-  const [news, setNews] =
-    useState([]);
-
-  const getNews =
-    async () => {
-      const res = await fetch(
-        "/api/news"
-      );
-
-      const data =
-        await res.json();
-
-      setNews(data);
-    };
-
-  useEffect(() => {
-    getNews();
-  }, []);
-
+export default function NewsCard({
+  news,
+}: any) {
   return (
-    <Container
-      size="xl"
-      py={20}
+    <Card
+      shadow="lg"
+      radius="md"
+      p="md"
+      withBorder
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+      }}
     >
-      <Title mb={20}>
-        Breaking News
-      </Title>
+      <Card.Section>
+        <Image
+          src={news.image}
+          h={220}
+          alt={news.title}
+          style={{
+            objectFit: "cover",
+          }}
+        />
+      </Card.Section>
 
-      <SimpleGrid
-        cols={{
-          base: 1,
-          sm: 2,
-          md: 3,
-          lg: 4,
+      <Stack
+        mt={10}
+        justify="space-between"
+        style={{
+          flex: 1,
         }}
-        spacing="md"
       >
-        {news.map(
-          (item: any) => (
-            <Card
-              key={item._id}
-              shadow="lg"
-              radius="md"
-              p="sm"
-              withBorder
-              style={{
-                width: "100%",
-              }}
-            >
-              <Card.Section>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  h={220}
-                  w="100%"
-                  style={{
-                    objectFit:
-                      "cover",
-                  }}
-                />
-              </Card.Section>
+        <Box>
+          <Text
+            fw={700}
+            size="lg"
+            lineClamp={2}
+            style={{
+              wordBreak: "break-word",
+            }}
+          >
+            {news.title}
+          </Text>
 
-              <Stack mt={10}>
-                <Box>
-                  <Text
-                    fw={700}
-                    size="md"
-                    lineClamp={2}
-                  >
-                    {item.title}
-                  </Text>
+          <Text
+            mt={8}
+            size="sm"
+            c="dimmed"
+            lineClamp={3}
+            style={{
+              wordBreak: "break-word",
+            }}
+          >
+            {news.description}
+          </Text>
 
-                  <Text
-                    mt={8}
-                    size="sm"
-                    c="dimmed"
-                    lineClamp={3}
-                  >
-                    {
-                      item.description
-                    }
-                  </Text>
+          <Text
+            mt={10}
+            size="xs"
+            c="red"
+            fw={700}
+          >
+            {news.category}
+          </Text>
+        </Box>
 
-                  <Text
-                    mt={10}
-                    size="xs"
-                    c="red"
-                    fw={700}
-                  >
-                    {item.category}
-                  </Text>
-                </Box>
-
-                <Link
-                  href={`/news/${item._id}`}
-                  style={{
-                    textDecoration:
-                      "none",
-                  }}
-                >
-                  <Button
-                    fullWidth
-                    color="red"
-                    radius="md"
-                  >
-                    Read More
-                  </Button>
-                </Link>
-              </Stack>
-            </Card>
-          )
-        )}
-      </SimpleGrid>
-    </Container>
+        <Link
+          href={`/news/${news._id}`}
+          style={{
+            textDecoration: "none",
+            width: "100%",
+          }}
+        >
+          <Button
+            fullWidth
+            color="red"
+            radius="md"
+            mt={15}
+            size="sm"
+          >
+            Read More
+          </Button>
+        </Link>
+      </Stack>
+    </Card>
   );
 }
