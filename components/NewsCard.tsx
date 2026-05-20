@@ -18,9 +18,10 @@ export default function NewsCard({
     <Card
       shadow="lg"
       radius="md"
-      p="md"
+      p="sm"
       withBorder
       style={{
+        width: "100%",
         height: "100%",
         display: "flex",
         flexDirection: "column",
@@ -29,8 +30,9 @@ export default function NewsCard({
       <Card.Section>
         <Image
           src={news.image}
-          h={220}
           alt={news.title}
+          h={220}
+          w="100%"
           style={{
             objectFit: "cover",
           }}
@@ -47,11 +49,8 @@ export default function NewsCard({
         <Box>
           <Text
             fw={700}
-            size="lg"
+            size="md"
             lineClamp={2}
-            style={{
-              wordBreak: "break-word",
-            }}
           >
             {news.title}
           </Text>
@@ -61,9 +60,6 @@ export default function NewsCard({
             size="sm"
             c="dimmed"
             lineClamp={3}
-            style={{
-              wordBreak: "break-word",
-            }}
           >
             {news.description}
           </Text>
@@ -90,7 +86,6 @@ export default function NewsCard({
             color="red"
             radius="md"
             mt={15}
-            size="sm"
           >
             Read More
           </Button>
