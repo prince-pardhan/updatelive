@@ -123,7 +123,7 @@ export default function CreatePage() {
           }
         />
 
-        <input
+        <input style={{color:"black"}}
           type="file"
           onChange={(e: any) =>
             setFile(

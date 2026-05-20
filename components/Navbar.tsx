@@ -16,7 +16,7 @@ export default function Navbar() {
       p="md"
       bg="black"
     >
-      <Title c="white">
+      <Title c="black">
         Breaking News
       </Title>
 
