@@ -24,6 +24,7 @@ export default function CreatePage() {
       description: "",
       category: "",
       author: "",
+      avtar: "",
     });
 
   const [file, setFile] =
@@ -123,7 +124,7 @@ export default function CreatePage() {
           }
         />
 
-        <input style={{color:"black"}}
+        <input style={{ color: "black" }}
           type="file"
           onChange={(e: any) =>
             setFile(
