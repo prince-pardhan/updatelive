@@ -1,8 +1,16 @@
 "use client";
 
+import {
+  useEffect,
+  useState,
+} from "react";
+
 import Link from "next/link";
 
 import {
+  Container,
+  SimpleGrid,
+  Title,
   Card,
   Image,
   Text,
@@ -11,86 +19,120 @@ import {
   Box,
 } from "@mantine/core";
 
-export default function NewsCard({
-  news,
-}: any) {
+export default function HomePage() {
+  const [news, setNews] =
+    useState([]);
+
+  const getNews =
+    async () => {
+      const res = await fetch(
+        "/api/news"
+      );
+
+      const data =
+        await res.json();
+
+      setNews(data);
+    };
+
+  useEffect(() => {
+    getNews();
+  }, []);
+
   return (
-    <Card
-      shadow="lg"
-      radius="md"
-      p="sm"
-      withBorder
-      style={{
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        flexDirection: "column",
-      }}
+    <Container
+      size="xl"
+      py={20}
     >
-      <Card.Section>
-        <Image
-          src={news.image}
-          alt={news.title}
-          h={220}
-          w="100%"
-          style={{
-            objectFit: "cover",
-          }}
-        />
-      </Card.Section>
+      <Title mb={20}>
+        Breaking News
+      </Title>
 
-      <Stack
-        mt={10}
-        justify="space-between"
-        style={{
-          flex: 1,
+      <SimpleGrid
+        cols={{
+          base: 1,
+          sm: 2,
+          md: 3,
+          lg: 4,
         }}
+        spacing="md"
       >
-        <Box>
-          <Text
-            fw={700}
-            size="md"
-            lineClamp={2}
-          >
-            {news.title}
-          </Text>
+        {news.map(
+          (item: any) => (
+            <Card
+              key={item._id}
+              shadow="lg"
+              radius="md"
+              p="sm"
+              withBorder
+              style={{
+                width: "100%",
+              }}
+            >
+              <Card.Section>
+                <Image
+                  src={item.image}
+                  alt={item.title}
+                  h={220}
+                  w="100%"
+                  style={{
+                    objectFit:
+                      "cover",
+                  }}
+                />
+              </Card.Section>
 
-          <Text
-            mt={8}
-            size="sm"
-            c="dimmed"
-            lineClamp={3}
-          >
-            {news.description}
-          </Text>
+              <Stack mt={10}>
+                <Box>
+                  <Text
+                    fw={700}
+                    size="md"
+                    lineClamp={2}
+                  >
+                    {item.title}
+                  </Text>
 
-          <Text
-            mt={10}
-            size="xs"
-            c="red"
-            fw={700}
-          >
-            {news.category}
-          </Text>
-        </Box>
+                  <Text
+                    mt={8}
+                    size="sm"
+                    c="dimmed"
+                    lineClamp={3}
+                  >
+                    {
+                      item.description
+                    }
+                  </Text>
 
-        <Link
-          href={`/news/${news._id}`}
-          style={{
-            textDecoration: "none",
-            width: "100%",
-          }}
-        >
-          <Button
-            fullWidth
-            color="red"
-            radius="md"
-            mt={15}
-          >
-            Read More
-          </Button>
-        </Link>
-      </Stack>
-    </Card>
+                  <Text
+                    mt={10}
+                    size="xs"
+                    c="red"
+                    fw={700}
+                  >
+                    {item.category}
+                  </Text>
+                </Box>
+
+                <Link
+                  href={`/news/${item._id}`}
+                  style={{
+                    textDecoration:
+                      "none",
+                  }}
+                >
+                  <Button
+                    fullWidth
+                    color="red"
+                    radius="md"
+                  >
+                    Read More
+                  </Button>
+                </Link>
+              </Stack>
+            </Card>
+          )
+        )}
+      </SimpleGrid>
+    </Container>
   );
 }
