@@ -10,7 +10,9 @@ const TEMP_DIR = path.join(
   "temp"
 );
 
-if (!fs.existsSync(TEMP_DIR)) {
+if (
+  !fs.existsSync(TEMP_DIR)
+) {
   fs.mkdirSync(TEMP_DIR, {
     recursive: true,
   });
@@ -50,8 +52,31 @@ const storage =
     },
   });
 
+const fileFilter: multer.Options["fileFilter"] =
+  (
+    _req,
+    file,
+    cb
+  ) => {
+    if (
+      /^image\/(png|jpe?g|webp|gif|svg\+xml)$/.test(
+        file.mimetype
+      )
+    ) {
+      cb(null, true);
+    } else {
+      cb(
+        new Error(
+          "Only image files are allowed (png, jpg, jpeg, webp, gif, svg)."
+        )
+      );
+    }
+  };
+
 const upload = multer({
   storage,
+
+  fileFilter,
 
   limits: {
     fileSize:
